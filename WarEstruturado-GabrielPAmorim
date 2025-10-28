@@ -1,0 +1,88 @@
+#include <stdio.h>
+#include <string.h>
+
+// Definição da struct Territorio
+// Armazena nome, cor do exército e quantidade de tropas para um território.
+typedef struct {
+    char nome[30];  // Nome do território (máximo 29 caracteres + '\0')
+    char cor[10];   // Cor do exército (máximo 9 caracteres + '\0')
+    int tropas;     // Quantidade de tropas no território
+} Territorio;
+
+#define MAX_TERRITORIOS 5
+
+int main() {
+    // Declaração do vetor de structs
+    // Cria um array capaz de armazenar 5 estruturas do tipo Territorio.
+    Territorio lista_territorios[MAX_TERRITORIOS];
+    int i; // Variável de controle para os laços
+
+    printf("--- Cadastro de Territórios ---\n");
+    printf("Sistema para registrar %d territórios (Nome, Cor, Tropas).\n\n", MAX_TERRITORIOS);
+
+    // ------------------------------------
+    // LAÇO DE ENTRADA DE DADOS
+    // ------------------------------------
+    // Loop 'for' para preencher os dados dos 5 territórios.
+    for (i = 0; i < MAX_TERRITORIOS; i++) {
+        printf("--- Território %d de %d ---\n", i + 1, MAX_TERRITORIOS);
+
+        // Entrada do Nome do Território
+        printf("Digite o nome do território (máx. 29 caracteres): ");
+        // Usando scanf para ler a string (nome), ele para no primeiro espaço.
+        // Se quisermos aceitar nomes com espaço, deveríamos usar fgets,
+        // mas para simplificar e seguir as instruções de usar scanf,
+        // vamos usá-lo com cuidado.
+        if (scanf("%29s", lista_territorios[i].nome) != 1) {
+             // Tratamento de erro básico
+             printf("Erro na leitura do nome. Encerrando.\n");
+             return 1;
+        }
+
+        // Entrada da Cor do Exército
+        printf("Digite a cor do exército (máx. 9 caracteres): ");
+        if (scanf("%9s", lista_territorios[i].cor) != 1) {
+             // Tratamento de erro básico
+             printf("Erro na leitura da cor. Encerrando.\n");
+             return 1;
+        }
+
+        // Entrada da Quantidade de Tropas
+        printf("Digite a quantidade de tropas (apenas números inteiros): ");
+        if (scanf("%d", &lista_territorios[i].tropas) != 1) {
+             // Tratamento de erro básico. 
+             // Se o usuário digitar algo que não é um inteiro, o programa pode falhar.
+             printf("Erro na leitura das tropas (entrada inválida). Encerrando.\n");
+             return 1;
+        }
+
+        printf("Território %d cadastrado com sucesso!\n\n", i + 1);
+    }
+
+    // Limpa o buffer de entrada (boa prática após scanf, especialmente antes de usar fgets,
+    // embora neste caso não seja estritamente necessário se apenas usamos scanf).
+    // while (getchar() != '\n'); 
+
+    // ------------------------------------
+    // EXIBIÇÃO DE DADOS
+    // ------------------------------------
+    printf("\n============================================\n");
+    printf("           DADOS DOS TERRITÓRIOS CADASTRADOS\n");
+    printf("============================================\n");
+    printf(" %-20s | %-10s | %-6s \n", "NOME", "COR", "TROPAS");
+    printf("--------------------------------------------\n");
+    
+    // Loop 'for' para percorrer o vetor e exibir os dados de cada Territorio.
+    for (i = 0; i < MAX_TERRITORIOS; i++) {
+        // Uso de printf com formatação para alinhamento e clareza.
+        printf(" %-20s | %-10s | %-6d \n", 
+               lista_territorios[i].nome, 
+               lista_territorios[i].cor, 
+               lista_territorios[i].tropas);
+    }
+
+    printf("============================================\n");
+    printf("Fim da exibição.\n");
+    
+    return 0;
+}
